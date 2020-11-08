@@ -8,8 +8,8 @@ var [getUsers, addUsers] = require('../controllers/user');
 router.post('/login', async function(req, res, next) {
   const users = await getUsers(req.body);
   res.json( {
-    success: true,
-    message: 'Authentication successful!',
+    success: (users!=null)?true:false,
+    message: (users!=null)?'Authentication successful!':'Authentication falied!',
     token: users
   } );
 });
