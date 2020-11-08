@@ -1,9 +1,20 @@
 const { mongoUtils, dataBase } = require('../lib/utils/mongo.js');
+const auth = require('../lib/utils/auth.js');
+const COLLECTION_NAME = 'messages';
 
-function getMsg() {
-  return mdbconn.conn().then((client) => {
-    return client.db('isis3710').collection('messages').find({}).toArray();
-  });
+
+async function getMsg() {
+
+    const client = await mongoUtils.conn();
+    const msgs = await client
+        .db(dataBase)
+        .collection(COLLECTION_NAME)
+        .find( {})
+        .toArray()
+        .finally(()=> client.close());
+
+    return msgs;
+  
 }
 
 function insertMsg(product) {
